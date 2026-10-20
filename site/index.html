@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>雷霆任務4 故事完全攻略 — 數位版</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><b id="brandTitle">雷霆任務4</b><span id="brandSub"></span></div>
+  <div class="searchwrap">
+    <input id="q" type="search" placeholder="搜尋全書：關卡、機體、武器數值、專有名詞…" autocomplete="off" spellcheck="false">
+    <span class="kbd">⌘K</span>
+    <div class="results" id="results"></div>
+  </div>
+  <button class="revbtn" id="revBtn" hidden></button>
+</header>
+<div class="shell">
+  <nav class="side" id="nav"></nav>
+  <main id="doc"></main>
+</div>
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="原書掃描頁">
+  <header><b id="drawerTitle"></b><button id="drawerClose" aria-label="關閉">✕</button></header>
+  <div class="body" id="drawerBody"></div>
+</aside>
+<div class="lightbox" id="lightbox"><img id="lightboxImg" alt="放大檢視"></div>
+<script src="assets/app.js"></script>
+</body>
+</html>
