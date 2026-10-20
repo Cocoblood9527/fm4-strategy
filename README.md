@@ -56,6 +56,25 @@ python3 tools/build.py     # 重生成 site/data/*.json 与裁切图
 - 7 条金手指码逐字校验通过
 - 复核项 10 条：9 条是"整页截图被误判为表格"（已自动降级为图片），1 条为人工覆写记录
 
+## 导出可搜索的 PDF
+
+站点自带打印样式（[site/assets/print.css](site/assets/print.css)），用无头 Chrome 渲染即可得到**带真实文字层**的 PDF——比扫描件小得多且能全文搜索：
+
+```sh
+cd site && python3 -m http.server 8765 &      # 需走 http，供 Chrome 拉取 JSON
+"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+  --headless=new --disable-gpu --no-pdf-header-footer \
+  --user-data-dir=/tmp/chrome-pdf-profile --virtual-time-budget=40000 \
+  --print-to-pdf="$PWD/../輸出.pdf" "http://127.0.0.1:8765/index.html?print=1"
+```
+
+`?print=1` 会把图片从 `loading="lazy"` 改成即时加载——否则无头打印不滚动，地图与截图会全部空白。产出 82 页 / 约 51MB。
+
+打印排版的两个反直觉之处，都是实测踩出来的：
+- **高图块与大表不能用 `break-inside: avoid`**。Chrome 找不到足够空间就把整块搬到别处，在页首留下空洞；允许跨页（表头靠 `display: table-header-group` 自动重复）反而更省纸——页数从 107 降到 82。
+- **打印里不要用 `vh`**。封面用 `padding-top: 26vh` 时无头渲染把它整页推空，改固定 `mm` 才稳定。
+
+
 ## 人工覆写机制
 
 MinerU 版面识别失败处**不改 `content.json`**（会被重建覆盖），而是写进 [tools/overrides.json](tools/overrides.json)：按段落丢弃指定页的自动块，再插入逐格核对过的手工数据。界面上这类块带「人工校對」标记，与自动产出区分。

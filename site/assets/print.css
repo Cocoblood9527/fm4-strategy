@@ -1,0 +1,67 @@
+@media print {
+  @page { size: A4; margin: 15mm 13mm 16mm 13mm; }
+
+  html, body { background: #fff !important; }
+  body { color: #1a1416; font-size: 10pt; line-height: 1.72; }
+
+  /* 介面元素不進印刷 */
+  .topbar, nav.side, .drawer, .scrim, .lightbox, .results,
+  .tablebar, .srcbtn, .mtag, .revbtn, .kbd, .searchwrap { display: none !important; }
+
+  .shell { display: block; max-width: none; margin: 0; }
+  main { padding: 0; min-width: 0; }
+
+  /* 保留原書紅黑雙色，否則印刷會變成灰框 */
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  section.sec { break-inside: auto; margin-bottom: 12pt; scroll-margin: 0; }
+  /* 不用 break-after:avoid —— 它與下方高圖塊互鎖會在頁首撐出大片空白 */
+  .sechead { break-after: auto; break-inside: avoid; border-bottom-width: 1.5pt; margin-bottom: 8pt; padding-bottom: 6pt; }
+  .sechead h2 { font-size: 15pt; }
+  .badge { font-size: 8.5pt; padding: 2pt 5pt; }
+  .sechead .pages { font-size: 8pt; }
+
+  .block { break-inside: auto; margin-bottom: 11pt; }
+  .block h3 { font-size: 10.5pt; break-after: avoid; break-inside: avoid; margin-bottom: 5pt; }
+  .prose p { max-width: none; margin-bottom: 6pt; line-height: 1.8; text-align: justify; break-inside: avoid; }
+  /* 高圖塊與大表允許跨頁：強行 avoid 會讓 Chrome 整塊搬走、留下空洞 */
+  figure.map { break-inside: auto; }
+
+  /* 表格：不跨頁斷行，表頭重複 */
+  table { font-size: 7.6pt; }
+  thead { display: table-header-group; }
+  thead th { padding: 4pt 5pt; font-size: 7.4pt; cursor: default; }
+  thead th::after, thead th.text::after { content: "" !important; }
+  tbody td { padding: 3.5pt 5pt; }
+  tbody tr { break-inside: avoid; }
+  .tablewrap { overflow: visible; box-shadow: none; max-height: none; }
+
+  figure.map { break-inside: avoid; }
+  figure.map img { max-width: 88mm; max-height: 112mm; width: auto; object-fit: contain; }
+  figure.map figcaption { font-size: 8pt; max-width: none; }
+
+  .chips { gap: 6pt; }
+  .chip { box-shadow: none; padding: 4pt 8pt; }
+  .pending { display: none; }
+  .note { font-size: 8pt; }
+
+  a { color: inherit; text-decoration: none; }
+}
+
+/* 封面與目錄：螢幕上不出現，只在印刷時出現 */
+#print-front { display: none; }
+@media print {
+  #print-front { display: block; }
+  /* 不用 vh —— 無頭列印時 vh 解析不穩定，會把封面推到下一頁 */
+  .cover { page-break-after: always; padding-top: 70mm; text-align: center; }
+  .cover .k { font-size: 9pt; letter-spacing: 4pt; color: #8e3d54; }
+  .cover h1 { font-size: 34pt; margin: 10pt 0 4pt; letter-spacing: 3pt; color: #8e3d54; }
+  .cover h2 { font-size: 15pt; font-weight: 500; margin: 0 0 30pt; color: #4a3f42; }
+  .cover .meta { font-size: 9pt; color: #6b5f63; line-height: 2; }
+  .cover .rule { width: 60pt; height: 2pt; background: #8e3d54; margin: 18pt auto; }
+  .toc { page-break-after: always; }
+  .toc h3 { font-size: 13pt; color: #8e3d54; letter-spacing: 2pt; border-bottom: 1.5pt solid #8e3d54; padding-bottom: 5pt; }
+  .toc ul { list-style: none; padding: 0; margin: 8pt 0; font-size: 9pt; column-count: 2; column-gap: 16pt; }
+  .toc li { padding: 1.5pt 0; break-inside: avoid; }
+  .toc .p { color: #8e3d54; font-weight: 600; margin-top: 6pt; }
+}

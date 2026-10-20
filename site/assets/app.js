@@ -5,6 +5,25 @@ const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&l
 const pg = (n) => "p" + String(n).padStart(3, "0");
 const pagesLabel = (a) => (a.length > 1 ? `${a[0]}–${a[a.length - 1]}` : `${a[0]}`);
 
+/* ---------------- 印刷前置頁（封面 + 目錄） ---------------- */
+function renderPrintFront() {
+  const m = S.content.meta;
+  let toc = `<div class="toc"><h3>目錄</h3><ul>`;
+  for (const part of S.content.tree) {
+    toc += `<li class="p">${esc(part.label)} <span style="color:#9a8e92">p.${pagesLabel(part.pages)}</span></li>`;
+    for (const c of part.children || []) {
+      if (c.label === part.label) continue;
+      toc += `<li style="padding-left:9pt">${esc(c.label)} <span style="color:#9a8e92">p.${pagesLabel(c.pages)}</span></li>`;
+    }
+  }
+  toc += "</ul></div>";
+  $("#print-front").innerHTML =
+    `<div class="cover"><div class="k">${esc(m.source)}</div><h1>${esc(m.title)}</h1>` +
+    `<h2>${esc(m.subtitle)}</h2><div class="rule"></div>` +
+    `<div class="meta">掃描版數位化重排 · 可全文檢索<br>原書：疾風之狼文化事業有限公司 發行 · 2003 年 · ISBN 957-0386-60-6<br>` +
+    `遊戲 © Square Enix · 書籍內容版權屬原權利人</div></div>` + toc;
+}
+
 /* ---------------- boot ---------------- */
 async function boot() {
   const [c] = await Promise.all([
@@ -35,6 +54,11 @@ async function boot() {
   });
   renderNav();
   renderBody();
+  renderPrintFront();
+  if (new URLSearchParams(location.search).get("print") === "1") {
+    $$("img").forEach((i) => { i.loading = "eager"; i.removeAttribute("data-zoom"); });
+    document.documentElement.classList.add("is-print");
+  }
   buildIndex();
   wire();
   history.replaceState(null, "", location.pathname + location.search + (location.hash || "#st-05"));
@@ -102,8 +126,8 @@ function renderBlock(b) {
     inner = `<div class="chips">${b.items.map((i) => `<div class="chip ${i.tone}"><span class="k">${esc(i.k)}</span><span class="v">${esc(i.v)}</span></div>`).join("")}</div>`;
   else if (b.type === "figure")
     inner =
-      `<figure class="map"><img src="${b.image}" alt="${esc(b.caption)}" loading="lazy" data-zoom="${esc(b.id)}">` +
-      `<figcaption><span>${esc(b.caption)}</span>${srcBtn(b)}</figcaption></figure>`;
+      `<figure class="map"><img src="${b.image}" alt="${esc(b.caption || "原書插圖")}" loading="lazy" data-zoom="${esc(b.id)}">` +
+      `${b.caption || b.src ? `<figcaption>${b.caption ? `<span>${esc(b.caption)}</span>` : ""}${srcBtn(b)}</figcaption>` : ""}</figure>`;
   else if (b.type === "table") inner = tableHTML(b);
   return `<div class="block" id="blk-${b.id}" data-block="${b.id}">${head}${inner}${b.note ? `<div class="note">${esc(b.note)}</div>` : ""}</div>`;
 }
