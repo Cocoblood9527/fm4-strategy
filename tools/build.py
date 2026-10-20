@@ -305,6 +305,24 @@ def main():
                     blocks.append({"id": bid, "section": sid, "type": "figure", "caption": None,
                                    "image": img, "pages": [i], "src": {"page": i, "rect": r}})
 
+    # ---------- 人工校對覆寫（MinerU 版面失敗處）----------
+    ovp = os.path.join(ROOT, "tools", "overrides.json")
+    applied = []
+    if os.path.exists(ovp):
+        ov = json.load(open(ovp, encoding="utf-8"))
+        for o in ov.get("overrides", []):
+            drop = set(o.get("drop_pages", []))
+            before = len(blocks)
+            blocks[:] = [b for b in blocks if not (b["section"] == o["section"] and b["src"]["page"] in drop)]
+            removed = before - len(blocks)
+            blk = dict(o["block"])
+            blk.setdefault("manual", True)
+            blocks.append(blk)
+            applied.append((o["id"], o["section"], removed, len(blk.get("rows", []))))
+            review[:] = [r for r in review if not (len(r) > 1 and str(r[1]).startswith("b156"))]
+    for oid, sec, removed, nrows in applied:
+        review.append(("人工覆寫", oid, f"於 {sec} 以 {nrows} 行手工資料取代 {removed} 個自動塊"))
+
     aliases = json.load(open(os.path.join(DATA, "aliases.json"), encoding="utf-8")) if os.path.exists(os.path.join(DATA, "aliases.json")) else []
     json.dump({"meta": {"title": "雷霆任務4", "subtitle": "故事完全攻略", "source": "疾風之狼 PS2-36",
                         "scanPages": 178, "engine": "MinerU 主幹 + Vision OCR 兜底"},

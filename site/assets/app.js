@@ -95,7 +95,7 @@ function srcBtn(b, label) {
 }
 
 function renderBlock(b) {
-  const head = b.title ? `<h3>${esc(b.title)}${srcBtn(b)}</h3>` : "";
+  const head = b.title ? `<h3>${esc(b.title)}${b.manual ? '<span class="mtag" title="此塊由人工逐格校對，非 MinerU 自動產出">人工校對</span>' : ""}${srcBtn(b)}</h3>` : "";
   let inner = "";
   if (b.type === "prose") inner = `<div class="prose">${b.paras.map((p) => `<p>${esc(p)}</p>`).join("")}</div>`;
   else if (b.type === "chips")

@@ -1,0 +1,169 @@
+{
+  "_note": "人工校對覆寫。build.py 每次重建都會合併此檔，因此不會被覆蓋。用於 MinerU 版面辨識失敗的頁面。",
+  "overrides": [
+    {
+      "id": "man-p156-emp",
+      "section": "data-153",
+      "drop_pages": [
+        156
+      ],
+      "reason": "MinerU 將此表壓成一列 4145 字（含 35 個編號碎片），整頁資料遺失。第 9 欄表頭為反白小字且掃描損毀，欄名依紙本原件確認。",
+      "block": {
+        "id": "man-p156-emp",
+        "section": "data-153",
+        "type": "table",
+        "manual": true,
+        "title": "電子干擾背包（EMP）",
+        "cols": [
+          {
+            "k": "name",
+            "label": "背包名稱",
+            "t": "text"
+          },
+          {
+            "k": "price",
+            "label": "價格",
+            "t": "num"
+          },
+          {
+            "k": "weight",
+            "label": "重量",
+            "t": "num"
+          },
+          {
+            "k": "range",
+            "label": "有效範圍",
+            "t": "text"
+          },
+          {
+            "k": "chance",
+            "label": "電子干擾成功機率",
+            "t": "text"
+          },
+          {
+            "k": "effects",
+            "label": "可造成的異常效果",
+            "t": "text"
+          },
+          {
+            "k": "ap",
+            "label": "消耗AP",
+            "t": "num"
+          },
+          {
+            "k": "dur",
+            "label": "異常效果持續回合數",
+            "t": "text"
+          },
+          {
+            "k": "limit",
+            "label": "單場使用限制",
+            "t": "text"
+          }
+        ],
+        "rows": [
+          {
+            "name": "EMPgf-Licorne",
+            "price": 3500,
+            "weight": 200,
+            "range": "1-4格",
+            "chance": "100%",
+            "effects": "『完全行動不能』、『LINK不能』、『背包使用不能』、『攻擊不能』",
+            "ap": 4,
+            "dur": "3回合",
+            "limit": "10次"
+          },
+          {
+            "name": "EMP07-Mayfly",
+            "price": 2000,
+            "weight": 190,
+            "range": "1-4格",
+            "chance": "90%",
+            "effects": "『完全行動不能』、『LINK不能』、『背包使用不能』、『攻擊不能』",
+            "ap": 4,
+            "dur": "5回合",
+            "limit": "10次"
+          },
+          {
+            "name": "EMP55-Greif",
+            "price": 1800,
+            "weight": 160,
+            "range": "1-4格",
+            "chance": "90%",
+            "effects": "『完全行動不能』、『LINK不能』、『背包使用不能』、『攻擊不能』",
+            "ap": 4,
+            "dur": "3回合",
+            "limit": "10次"
+          },
+          {
+            "name": "EMP4B-Ange",
+            "price": 1280,
+            "weight": 150,
+            "range": "1-4格",
+            "chance": "90%",
+            "effects": "『完全行動不能』、『攻擊不能』",
+            "ap": 4,
+            "dur": "4回合",
+            "limit": "10次"
+          },
+          {
+            "name": "EMP104-Kirin",
+            "price": 1500,
+            "weight": 140,
+            "range": "1-4格",
+            "chance": "80%",
+            "effects": "『完全行動不能』、『LINK不能』",
+            "ap": 4,
+            "dur": "3回合",
+            "limit": "10次"
+          },
+          {
+            "name": "EMP3C-Priere",
+            "price": 1200,
+            "weight": 120,
+            "range": "1-4格",
+            "chance": "70%",
+            "effects": "『完全行動不能』、『LINK不能』、『背包使用不能』、『攻擊不能』",
+            "ap": 4,
+            "dur": "3回合",
+            "limit": "10次"
+          },
+          {
+            "name": "EMP22-Blei",
+            "price": 800,
+            "weight": 100,
+            "range": "1-4格",
+            "chance": "60%",
+            "effects": "『完全行動不能』、『背包使用不能』、『攻擊不能』",
+            "ap": 4,
+            "dur": "3回合",
+            "limit": "10次"
+          },
+          {
+            "name": "EMP01-Firefly",
+            "price": 600,
+            "weight": 90,
+            "range": "1-4格",
+            "chance": "60%",
+            "effects": "『移動力減半』、『攻擊不能』",
+            "ap": 4,
+            "dur": "3回合",
+            "limit": "無"
+          }
+        ],
+        "pages": [
+          156
+        ],
+        "src": {
+          "page": 156,
+          "rect": [
+            0.157,
+            0.148,
+            0.762,
+            0.573
+          ]
+        }
+      }
+    }
+  ]
+}
